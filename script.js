@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateWordList(wordList, shuffledWords);
 
     // Calculate the maximum width of the words and set the highlight width accordingly
-    const maxWidth = getMaxWidth(shuffledWords);
+    const maxWidth = getMaxWidth(words);
     setHighlightWidth(maxWidth);
 
     const highlightElement = document.getElementById('highlight');
@@ -78,16 +78,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function getMaxWidth(words) {
-        const tempElement = document.createElement('div');
+        const tempElement = document.createElement('h1');
         tempElement.style.position = 'absolute';
         tempElement.style.visibility = 'hidden';
         tempElement.style.whiteSpace = 'nowrap';
         document.body.appendChild(tempElement);
 
         let maxWidth = 0;
+        let width = 0;
         words.forEach(word => {
             tempElement.textContent = word;
-            const width = tempElement.offsetWidth;
+            width = tempElement.offsetWidth;
             if (width > maxWidth) {
                 maxWidth = width;
             }
