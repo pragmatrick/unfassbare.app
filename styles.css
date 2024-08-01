@@ -88,11 +88,11 @@ main {
     align-items: center;
     z-index: 1;
     user-select: none; /* Prevent text selection */
-    gap: 0;
+    gap: 0 !important;
 }
 
 #highlight {
-    margin: 0 5px;
+    margin: 0 0.6rem;
 }
 
 .slogan h1:hover {
