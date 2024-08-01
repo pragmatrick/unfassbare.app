@@ -87,12 +87,15 @@ main {
     justify-content: center;
     align-items: center;
     z-index: 1;
-    cursor: pointer; /* Change cursor to indicate clickable area */
     user-select: none; /* Prevent text selection */
 }
 
 .highlight {
     margin: 0 5px;
+}
+
+.slogan h1:hover {
+    cursor: pointer;
 }
 
 .word-list-container {
