@@ -88,9 +88,10 @@ main {
     align-items: center;
     z-index: 1;
     user-select: none; /* Prevent text selection */
+    gap: 0;
 }
 
-.highlight {
+#highlight {
     margin: 0 5px;
 }
 
