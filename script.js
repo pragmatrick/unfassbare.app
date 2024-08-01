@@ -16,7 +16,7 @@ async function fetchRandomWords(n = "") {
 
 document.addEventListener('DOMContentLoaded', async () => {
     let words = await fetchRandomWords();
-    words = words.forEach(word => word+"EN");
+    words.map(word => word+"EN");
 
     const shuffledWords = shuffleArray(words);
 
