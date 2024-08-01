@@ -19,37 +19,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const shuffledWords = shuffleArray(words);
 
-    const wordListContainer = document.createElement('div');
-    wordListContainer.classList.add('word-list-container');
-    document.body.appendChild(wordListContainer);
-
-    const wordList = document.createElement('div');
-    wordList.classList.add('word-list');
-    wordListContainer.appendChild(wordList);
+    const wordListContainer = document.getElementById('wordListContainer');
+    const wordList = document.getElementById('wordList');
 
     populateWordList(wordList, shuffledWords);
 
-    let isScrolling = false;
     let maxWidth = getMaxWidth(shuffledWords);
 
     // Update slogan with max width
-    const sloganElement = document.querySelector('.slogan');
-    sloganElement.style.width = `${maxWidth}px`;
+    const highlightElement = document.getElementById('highlight');
+    highlightElement.style.minWidth = `${maxWidth}px`;
 
-    window.addEventListener('wheel', (event) => {
-        if (isScrolling) return;
-        isScrolling = true;
-        
-        const direction = Math.sign(event.deltaY);
-        scrollWordList(direction);
-
-        setTimeout(() => {
-            isScrolling = false;
-        }, 300); // Adjust the delay to control the scroll speed
+    wordListContainer.addEventListener('scroll', () => {
+        updateSlogan();
     });
 
     function populateWordList(container, words) {
         container.innerHTML = '';
+        words.forEach(word => {
+            const wordElement = document.createElement('div');
+            wordElement.textContent = word;
+            container.appendChild(wordElement);
+        });
+
+        // Duplicate the list to create an infinite scrolling effect
         words.forEach(word => {
             const wordElement = document.createElement('div');
             wordElement.textContent = word;
@@ -65,31 +58,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         return array;
     }
 
-    function scrollWordList(direction) {
-        const wordElements = wordList.children;
-        const wordHeight = wordElements[0].offsetHeight;
-
-        wordList.style.transition = 'none';
-        wordList.style.transform = `translateY(${direction * wordHeight}px)`;
-
-        setTimeout(() => {
-            wordList.style.transition = 'transform 0.3s ease-in-out';
-            wordList.style.transform = `translateY(0px)`;
-
-            if (direction > 0) {
-                wordList.insertBefore(wordList.lastElementChild, wordList.firstElementChild);
-            } else {
-                wordList.appendChild(wordList.firstElementChild);
-            }
-
-            updateSlogan();
-        }, 0);
-    }
-
     function updateSlogan() {
-        const middleIndex = Math.floor(wordList.children.length / 2);
-        const middleWord = wordList.children[middleIndex].textContent;
-        document.getElementById('highlight').textContent = middleWord;
+        const wordElements = wordList.children;
+        const containerRect = wordListContainer.getBoundingClientRect();
+        const middle = containerRect.top + containerRect.height / 2;
+        let closest = wordElements[0];
+        let closestDist = Math.abs(middle - closest.getBoundingClientRect().top);
+
+        for (const wordElement of wordElements) {
+            const dist = Math.abs(middle - wordElement.getBoundingClientRect().top);
+            if (dist < closestDist) {
+                closest = wordElement;
+                closestDist = dist;
+            }
+        }
+
+        highlightElement.textContent = closest.textContent;
     }
 
     function getMaxWidth(words) {

@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-black);
+    overflow: hidden; /* Remove scrollbar */
 }
 
 header {
@@ -25,14 +26,14 @@ header {
     border: 1px solid var(--color-black);
     padding: 0.5rem;
     cursor: pointer;
-    background-color: var(--color-bg);
-    color: black;
+    background-color: white;
+    color: var(--color-black);
 }
 
 .menu .dropdown {
     display: none;
     position: absolute;
-    background-color: var(--color-bg);
+    background-color: white;
     border: 1px solid var(--color-black);
     top: 100%;
     left: 0;
@@ -64,6 +65,8 @@ main {
     text-align: center;
     position: relative;
     overflow: hidden; /* Remove scrollbar */
+    padding-top: 70px; /* Adjust to the height of the header */
+    padding-bottom: 50px; /* Adjust to the height of the footer */
 }
 
 .slogan {
@@ -72,26 +75,28 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
     white-space: nowrap;
+    background: var(--color-bg); /* Light background for the slogan */
+    padding: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 10px rgba(var(--color-bg), 0.7); /* Circular fade-out effect */
 }
 
 .word-list-container {
-    height: 100vh;
-    overflow: hidden;
-    position: relative;
+    height: calc(100vh - 120px); /* Adjust according to header and footer heights */
+    overflow-y: auto;
     width: 100%;
+    text-align: center;
 }
 
 .word-list {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: inline-block;
+    width: 100%;
 }
 
 .word-list div {
     padding: 0.5rem;
     text-align: center;
-    color: grey;
+    color: var(--color-grey);
     user-select: none;
 }
 
