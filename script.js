@@ -64,10 +64,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const containerRect = wordListContainer.getBoundingClientRect();
         const middle = containerRect.top + containerRect.height / 2;
         let closest = wordElements[0];
-        let closestDist = Math.abs(middle - closest.getBoundingClientRect().top);
+        let closestDist = Math.abs(middle - closest.getBoundingClientRect().bottom);
 
         for (const wordElement of wordElements) {
-            const dist = Math.abs(middle - wordElement.getBoundingClientRect().top);
+            const dist = Math.abs(middle - wordElement.getBoundingClientRect().bottom);
             if (dist < closestDist) {
                 closest = wordElement;
                 closestDist = dist;

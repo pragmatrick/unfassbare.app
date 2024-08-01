@@ -83,10 +83,9 @@ main {
     left: 50%;
     transform: translate(-50%, -50%);
     white-space: nowrap;
-    background: var(--color-bg); /* Light background for the slogan */
+    background: linear-gradient(to bottom, rgba(214, 214, 214, 1), rgba(214, 214, 214, 0)); /* Vertical fade */
     padding: 10px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px 10px rgba(214, 214, 214, 0.7); /* Circular fade-out effect */
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
