@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     highlightElement.style.minWidth = `${maxWidth}px`;
 
     wordListContainer.addEventListener('scroll', () => {
+        handleInfiniteScroll();
         updateSlogan();
     });
 
@@ -94,6 +95,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.body.removeChild(tempElement);
         return maxWidth;
+    }
+
+    function handleInfiniteScroll() {
+        const scrollTop = wordListContainer.scrollTop;
+        const scrollHeight = wordListContainer.scrollHeight;
+        const containerHeight = wordListContainer.clientHeight;
+
+        if (scrollTop + containerHeight >= scrollHeight - 10) {
+            wordListContainer.scrollTop = 10;
+        } else if (scrollTop <= 10) {
+            wordListContainer.scrollTop = scrollHeight - containerHeight - 10;
+        }
     }
 
     updateSlogan();
