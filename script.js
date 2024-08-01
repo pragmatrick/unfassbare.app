@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         slogan.style.gap = '10px';
 
         // Center the word list relative to the highlight element
-        wordListContainer.style.paddingLeft = `${maxWidth / 2}px`;
+        wordListContainer.style.paddingRight = `${maxWidth / 2}px`;
     }
 
     function handleInfiniteScroll() {
