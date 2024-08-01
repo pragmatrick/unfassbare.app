@@ -115,5 +115,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         slogan.style.gap = '10px';
     }
 
+    function handleInfiniteScroll() {
+        const scrollTop = wordListContainer.scrollTop;
+        const scrollHeight = wordListContainer.scrollHeight;
+        const containerHeight = wordListContainer.clientHeight;
+
+        if (scrollTop + containerHeight >= scrollHeight - 10) {
+            wordListContainer.scrollTop = 10;
+        } else if (scrollTop <= 10) {
+            wordListContainer.scrollTop = scrollHeight - containerHeight - 10;
+        }
+    }
+
     updateSlogan();
 });
