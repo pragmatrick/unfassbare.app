@@ -29,10 +29,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     populateWordList(wordList, shuffledWords);
 
+    let isScrolling = false;
+    let maxWidth = getMaxWidth(shuffledWords);
+
+    // Update slogan with max width
+    const sloganElement = document.querySelector('.slogan');
+    sloganElement.style.width = `${maxWidth}px`;
+
     window.addEventListener('wheel', (event) => {
-        event.preventDefault();
+        if (isScrolling) return;
+        isScrolling = true;
+        
         const direction = Math.sign(event.deltaY);
         scrollWordList(direction);
+
+        setTimeout(() => {
+            isScrolling = false;
+        }, 300); // Adjust the delay to control the scroll speed
     });
 
     function populateWordList(container, words) {
@@ -55,10 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     function scrollWordList(direction) {
         const wordElements = wordList.children;
         const wordHeight = wordElements[0].offsetHeight;
-        const scrollAmount = direction * wordHeight;
 
         wordList.style.transition = 'none';
-        wordList.style.transform = `translateY(${scrollAmount}px)`;
+        wordList.style.transform = `translateY(${direction * wordHeight}px)`;
 
         setTimeout(() => {
             wordList.style.transition = 'transform 0.3s ease-in-out';
@@ -78,6 +90,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         const middleIndex = Math.floor(wordList.children.length / 2);
         const middleWord = wordList.children[middleIndex].textContent;
         document.getElementById('highlight').textContent = middleWord;
+    }
+
+    function getMaxWidth(words) {
+        const tempElement = document.createElement('div');
+        tempElement.style.position = 'absolute';
+        tempElement.style.visibility = 'hidden';
+        tempElement.style.whiteSpace = 'nowrap';
+        document.body.appendChild(tempElement);
+
+        let maxWidth = 0;
+        words.forEach(word => {
+            tempElement.textContent = word;
+            const width = tempElement.offsetWidth;
+            if (width > maxWidth) {
+                maxWidth = width;
+            }
+        });
+
+        document.body.removeChild(tempElement);
+        return maxWidth;
     }
 
     updateSlogan();

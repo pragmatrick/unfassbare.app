@@ -1,8 +1,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #000;
+    background-color: var(--color-bg);
+    color: var(--color-black);
 }
 
 header {
@@ -22,18 +22,18 @@ header {
 }
 
 .menu span {
-    border: 1px solid black;
+    border: 1px solid var(--color-black);
     padding: 0.5rem;
     cursor: pointer;
-    background-color: white;
+    background-color: var(--color-bg);
     color: black;
 }
 
 .menu .dropdown {
     display: none;
     position: absolute;
-    background-color: white;
-    border: 1px solid black;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-black);
     top: 100%;
     left: 0;
     z-index: 1000;
@@ -47,7 +47,7 @@ header {
     display: block;
     padding: 0.5rem;
     text-decoration: none;
-    color: black;
+    color: var(--color-black);
 }
 
 .github-icon img {
@@ -69,7 +69,9 @@ main {
 .slogan {
     position: fixed;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
 }
 
 .word-list-container {
@@ -82,7 +84,8 @@ main {
 .word-list {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .word-list div {
@@ -99,14 +102,24 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 footer p, footer a {
     margin: 0;
     font-size: 0.875rem;
     text-decoration: none;
+    color: var(--color-black);
 }
 
 footer a:hover {
-    color: gold;
+    color: var(--color-hover);
+}
+
+:root {
+    --color-bg: rgb(214, 214, 214);
+    --color-black: black;
+    --color-grey: grey;
+    --color-accent: rgb(255, 191, 0);
+    --color-hover: gold;
 }
