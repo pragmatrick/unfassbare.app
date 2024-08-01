@@ -94,7 +94,6 @@ main {
 }
 
 .word-list-container {
-    height: calc(100vh - 120px); /* Adjust according to header and footer heights */
     overflow-y: auto;
     width: 100%;
     text-align: center;
@@ -103,7 +102,6 @@ main {
 .word-list-container::-webkit-scrollbar {
     display: none;
 }
-  
 /* Hide scrollbar for IE, Edge and Firefox */
 .word-list-container {
     -ms-overflow-style: none;  /* IE and Edge */
