@@ -7,6 +7,7 @@ body {
 }
 
 header {
+    background-color: transparent;
     display: flex;
     justify-content: space-between;
     padding: 1rem;
@@ -107,6 +108,7 @@ main {
 }
 
 footer {
+    background-color: transparent;
     text-align: center;
     padding: 1rem;
     position: fixed;
@@ -115,12 +117,12 @@ footer {
     border-top: 1px solid #ddd;
 }
 
-footer p {
+footer p, footer a {
     margin: 0;
     font-size: 0.875rem;
+    text-decoration: none;
 }
 
-footer a {
+footer a:hover {
     color: gold;
-    text-decoration: none;
 }
