@@ -3,16 +3,16 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
     color: #000;
+    overflow: hidden; /* Enable scrolling for the entire page but only affect the word-list div */
 }
 
 header {
     display: flex;
     justify-content: space-between;
     padding: 1rem;
-    background-color: white;
     border-bottom: 1px solid #ddd;
     position: fixed;
-    width: 100%;
+    width: 95%;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -68,16 +68,18 @@ main {
 
 .slogan {
     position: relative;
+    z-index: 2; /* Ensure it is in front of the word-list */
 }
 
 .word-list {
-    position: absolute;
+    position: relative;
     top: 50%;
     transform: translateY(-50%);
     height: 60vh;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: gold #ddd;
+    z-index: 1; /* Ensure it is behind the slogan */
 }
 
 .word-list::-webkit-scrollbar {
@@ -105,7 +107,6 @@ main {
 footer {
     text-align: center;
     padding: 1rem;
-    background-color: white;
     position: fixed;
     bottom: 0;
     width: 100%;
