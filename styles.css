@@ -86,10 +86,13 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5px;
     z-index: 1;
     cursor: pointer; /* Change cursor to indicate clickable area */
     user-select: none; /* Prevent text selection */
+}
+
+.highlight {
+    margin: 0 5px;
 }
 
 .word-list-container {
