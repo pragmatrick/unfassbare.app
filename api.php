@@ -70,8 +70,12 @@ if (isset($_GET['words'])) {
     } elseif (ctype_digit($getParam)) {
         // ?get with a numeric value, return that many random words
         $count = intval($getParam);
-        echo getRandomWords($conn, $count);
-    } 
+        if ($count == 42) {
+            echo getRandomWord($conn);
+        } else {
+            echo getRandomWords($conn, $count);
+        }
+    }
 } 
 elseif (isset($_GET['hallo'])) {
     // Determine the greeting based on the time of day
