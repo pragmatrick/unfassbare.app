@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    wordList.addEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
         const scrollTop = wordList.scrollTop;
         const elementHeight = wordElements[0].offsetHeight;
         const index = Math.round(scrollTop / elementHeight);
