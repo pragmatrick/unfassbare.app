@@ -72,8 +72,12 @@ if (isset($_GET['words'])) {
         $count = intval($getParam);
         echo getRandomWords($conn, $count);
     }
-} 
-elseif (isset($_GET['hallo'])) {
+}
+else if (isset($_GET['word'])) {
+    $getParam = $_GET['word'];
+    echo getRandomWord($conn);
+}
+elseif (isset($_GET['hey'])) {
     // Determine the greeting based on the time of day
     $now = new DateTime("now", new DateTimeZone("Europe/Berlin"));
     $hour = $now->format('G');
@@ -95,7 +99,7 @@ elseif (isset($_GET['hallo'])) {
     // Return the greeting as JSON
     echo json_encode($greeting);
 }
-elseif (isset($_GET['ciao'])) {
+elseif (isset($_GET['bye'])) {
     // Fetch a random word and append "EN"
     $randomWord = getRandomWord($conn) . "E";
     $firstLetter = mb_strtoupper(mb_substr($randomWord, 0, 1, 'UTF-8'), 'UTF-8');
