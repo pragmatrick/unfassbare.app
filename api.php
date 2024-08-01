@@ -70,11 +70,7 @@ if (isset($_GET['words'])) {
     } elseif (ctype_digit($getParam)) {
         // ?get with a numeric value, return that many random words
         $count = intval($getParam);
-        if ($count == 42) {
-            echo getRandomWord($conn);
-        } else {
-            echo getRandomWords($conn, $count);
-        }
+        echo getRandomWords($conn, $count);
     }
 } 
 elseif (isset($_GET['hallo'])) {
