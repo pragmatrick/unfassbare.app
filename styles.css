@@ -16,7 +16,7 @@ body {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: right;
     padding: 1rem;
     background-color: transparent;
     position: fixed;
