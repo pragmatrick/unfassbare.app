@@ -16,7 +16,6 @@ async function fetchRandomWords(n = "") {
 
 document.addEventListener('DOMContentLoaded', async () => {
     let words = await fetchRandomWords();
-    words = words.map(word => word+"EN");
 
     const shuffledWords = shuffleArray(words);
 
@@ -79,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (closest) {
-            highlightElement.textContent = closest.textContent;
+            highlightElement.textContent = closest.textContent+"EN";
         }
     }
 
@@ -92,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         let maxWidth = 0;
         words.forEach(word => {
-            tempElement.textContent = word;
+            tempElement.textContent = word+"EN";
             const width = tempElement.offsetWidth;
             if (width > maxWidth) {
                 maxWidth = width;
