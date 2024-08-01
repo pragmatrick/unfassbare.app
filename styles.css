@@ -1,3 +1,11 @@
+:root {
+    --color-bg: rgb(214, 214, 214);
+    --color-black: black;
+    --color-grey: grey;
+    --color-accent: rgb(255, 191, 0);
+    --color-hover: gold;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -119,12 +127,4 @@ footer p, footer a {
 
 footer a:hover {
     color: var(--color-hover);
-}
-
-:root {
-    --color-bg: rgb(214, 214, 214);
-    --color-black: black;
-    --color-grey: grey;
-    --color-accent: rgb(255, 191, 0);
-    --color-hover: gold;
 }
