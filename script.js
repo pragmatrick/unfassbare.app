@@ -141,6 +141,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         wordListContainer.scrollTop = wordList.clientHeight;
     }
 
+    document.querySelector('.slogan').addEventListener('click', () => {
+        const sloganText = `${document.getElementById('part1').textContent} ${highlightElement.textContent} ${document.getElementById('part2').textContent}`;
+        navigator.clipboard.writeText(sloganText);
+    });
+
+
     setupInfiniteScroll();
     updateSlogan();
 });
