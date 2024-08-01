@@ -1,6 +1,6 @@
 async function fetchRandomWords(n = "") {
     try {
-        if (!Number.isInteger(n)) n = ""
+        if (!Number.isInteger(n)) n = "";
         const response = await fetch(`/api/get?words=${n}`);
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     populateWordList(wordList, shuffledWords);
 
-    let maxWidth = getMaxWidth(shuffledWords);
+    // Calculate the maximum width of the words and set the highlight width accordingly
+    const maxWidth = getMaxWidth(shuffledWords);
+    setHighlightWidth(maxWidth);
 
-    // Update slogan with max width
     const highlightElement = document.getElementById('highlight');
-    highlightElement.style.minWidth = `${maxWidth}px`;
 
     wordListContainer.addEventListener('scroll', () => {
         handleInfiniteScroll();
@@ -97,16 +97,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         return maxWidth;
     }
 
-    function handleInfiniteScroll() {
-        const scrollTop = wordListContainer.scrollTop;
-        const scrollHeight = wordListContainer.scrollHeight;
-        const containerHeight = wordListContainer.clientHeight;
+    function setHighlightWidth(maxWidth) {
+        const highlightElement = document.getElementById('highlight');
+        const part1 = document.getElementById('part1');
+        const part2 = document.getElementById('part2');
 
-        if (scrollTop + containerHeight >= scrollHeight - 10) {
-            wordListContainer.scrollTop = 10;
-        } else if (scrollTop <= 10) {
-            wordListContainer.scrollTop = scrollHeight - containerHeight - 10;
-        }
+        // Set the width of the highlight element
+        highlightElement.style.display = 'inline-block';
+        highlightElement.style.width = `${maxWidth}px`;
+
+        // Adjust the positioning of part1 and part2
+        const slogan = document.querySelector('.slogan');
+        slogan.style.display = 'flex';
+        slogan.style.justifyContent = 'center';
+        slogan.style.alignItems = 'center';
+        slogan.style.gap = '10px';
     }
 
     updateSlogan();
