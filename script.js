@@ -118,9 +118,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         slogan.style.alignItems = 'center';
         slogan.style.gap = '10px';
 
-        /* Center the word list relative to the highlight element
-        const offset = (window.innerHeight / 2) - (highlightElement.offsetHeight / 2);
-        wordListContainer.style.paddingTop = `${offset}px`;*/
+        // Center the word list relative to the highlight element
+        wordListContainer.style.paddingLeft = `${maxWidth / 2}px`;
     }
 
     function handleInfiniteScroll() {
@@ -137,13 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Prepend and append clones of the word list to create the infinite effect
     function setupInfiniteScroll() {
-        /*const cloneTop = wordList.cloneNode(true);
-        const cloneBottom = wordList.cloneNode(true);
-
-        wordListContainer.insertBefore(cloneTop, wordListContainer.firstChild);
-        wordListContainer.appendChild(cloneBottom);*/
-
-        // Adjust the scroll position to the middle clone
+        // Adjust the scroll position to the div containing the word list
         wordListContainer.scrollTop = wordList.clientHeight;
     }
 
