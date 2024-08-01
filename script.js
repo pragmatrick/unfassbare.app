@@ -14,12 +14,33 @@ async function fetchRandomWords(n = "") {
     }
 }
 
-async function fetchNewWord() {
-    const words = await fetchRandomWords(1);
-    document.getElementById('word').innerText = words[0];
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    const words = await fetchRandomWords();
 
-async function fetchAllWords() {
-    const words = await fetchRandomWords(null);
-    document.getElementById('all-words').innerText = words.join(', ');
-}
+    const wordList = document.getElementById('wordList');
+
+    words.forEach(word => {
+        const wordElement = document.createElement('div');
+        wordElement.textContent = word;
+        wordElement.addEventListener('click', () => {
+            document.getElementById('highlight').textContent = word;
+        });
+        wordList.appendChild(wordElement);
+    });
+
+    const wordElements = document.querySelectorAll('.word-list div');
+    wordElements.forEach(wordElement => {
+        wordElement.addEventListener('click', () => {
+            wordElements.forEach(el => el.classList.remove('active'));
+            wordElement.classList.add('active');
+        });
+    });
+
+    wordList.addEventListener('scroll', () => {
+        const scrollTop = wordList.scrollTop;
+        const elementHeight = wordElements[0].offsetHeight;
+        const index = Math.round(scrollTop / elementHeight);
+        const word = words[index];
+        document.getElementById('highlight').textContent = word;
+    });
+});
