@@ -67,8 +67,10 @@ main {
 }
 
 .slogan {
-    position: relative;
+    position: fixed;
     z-index: 2; /* Ensure it is in front of the word-list */
+    top: 50%; /* Adjust as needed */
+    left: 50%; /* Adjust as needed */
 }
 
 .word-list {
@@ -101,7 +103,7 @@ main {
 }
 
 .word-list div:hover {
-    background-color: #ffd700;
+    color: white;
 }
 
 footer {
