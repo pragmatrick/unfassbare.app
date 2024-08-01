@@ -75,7 +75,7 @@ main {
     overflow: hidden; /* Remove scrollbar */
 }
 
-.slogan-wrapper, .slogan {
+ .slogan {
     position: fixed;
     top: 50%;
     left: 50%;
