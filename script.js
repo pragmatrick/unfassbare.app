@@ -1,6 +1,6 @@
 async function fetchRandomWords(n = "") {
     try {
-        if (!Number.isInteger(n)) n = "";
+        if (!Number.isInteger(n)) n = ""
         const response = await fetch(`/api/get?words=${n}`);
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateWordList(wordList, shuffledWords);
 
     // Calculate the maximum width of the words and set the highlight width accordingly
-    const maxWidth = getMaxWidth(words);
+    const maxWidth = getMaxWidth(shuffledWords);
     setHighlightWidth(maxWidth);
 
     const highlightElement = document.getElementById('highlight');
@@ -37,13 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function populateWordList(container, words) {
         container.innerHTML = '';
-        words.forEach(word => {
-            const wordElement = document.createElement('div');
-            wordElement.textContent = word;
-            container.appendChild(wordElement);
-        });
-
-        // Duplicate the list to create an infinite scrolling effect
         words.forEach(word => {
             const wordElement = document.createElement('div');
             wordElement.textContent = word;
@@ -85,10 +78,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.appendChild(tempElement);
 
         let maxWidth = 0;
-        let width = 0;
         words.forEach(word => {
             tempElement.textContent = word;
-            width = tempElement.offsetWidth;
+            const width = tempElement.offsetWidth;
             if (width > maxWidth) {
                 maxWidth = width;
             }
@@ -113,6 +105,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         slogan.style.justifyContent = 'center';
         slogan.style.alignItems = 'center';
         slogan.style.gap = '10px';
+
+        // Center the word list relative to the highlight element
+        const offset = (window.innerHeight / 2) - (highlightElement.offsetHeight / 2);
+        wordListContainer.style.paddingTop = `${offset}px`;
     }
 
     function handleInfiniteScroll() {
@@ -120,12 +116,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         const scrollHeight = wordListContainer.scrollHeight;
         const containerHeight = wordListContainer.clientHeight;
 
-        if (scrollTop + containerHeight >= scrollHeight - 10) {
-            wordListContainer.scrollTop = 10;
-        } else if (scrollTop <= 10) {
-            wordListContainer.scrollTop = scrollHeight - containerHeight - 10;
+        if (scrollTop === 0) {
+            wordListContainer.scrollTop = scrollHeight - containerHeight * 2;
+        } else if (scrollTop + containerHeight >= scrollHeight) {
+            wordListContainer.scrollTop = containerHeight;
         }
     }
 
+    // Prepend and append clones of the word list to create the infinite effect
+    function setupInfiniteScroll() {
+        const cloneTop = wordList.cloneNode(true);
+        const cloneBottom = wordList.cloneNode(true);
+
+        wordListContainer.insertBefore(cloneTop, wordListContainer.firstChild);
+        wordListContainer.appendChild(cloneBottom);
+
+        // Adjust the scroll position to the middle clone
+        wordListContainer.scrollTop = wordList.clientHeight;
+    }
+
+    setupInfiniteScroll();
     updateSlogan();
 });
