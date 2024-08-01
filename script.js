@@ -1,7 +1,7 @@
 async function fetchRandomWords(n = "") {
     try {
         if (!Number.isInteger(n)) n = ""
-        const response = await fetch(`/api/get/?words=${n}`);
+        const response = await fetch(`/api/get?words=${n}`);
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
