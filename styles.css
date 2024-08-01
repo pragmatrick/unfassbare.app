@@ -10,9 +10,8 @@ header {
     justify-content: space-between;
     padding: 1rem;
     background-color: transparent;
-    border-bottom: 1px solid #ddd;
     position: fixed;
-    width: 100%;
+    width: 90%;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -23,18 +22,18 @@ header {
 }
 
 .menu span {
-    border: 1px solid gold;
+    border: 1px solid black;
     padding: 0.5rem;
     cursor: pointer;
     background-color: white;
-    color: gold;
+    color: black;
 }
 
 .menu .dropdown {
     display: none;
     position: absolute;
     background-color: white;
-    border: 1px solid gold;
+    border: 1px solid black;
     top: 100%;
     left: 0;
     z-index: 1000;
@@ -48,7 +47,7 @@ header {
     display: block;
     padding: 0.5rem;
     text-decoration: none;
-    color: gold;
+    color: black;
 }
 
 .github-icon img {
@@ -64,6 +63,7 @@ main {
     height: 100vh;
     text-align: center;
     position: relative;
+    overflow: hidden; /* Remove scrollbar */
 }
 
 .slogan {
@@ -72,30 +72,24 @@ main {
     transform: translateY(-50%);
 }
 
-.word-list {
+.word-list-container {
     height: 100vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: gold #ddd;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
 }
 
-.word-list::-webkit-scrollbar {
-    width: 8px;
-}
-
-.word-list::-webkit-scrollbar-track {
-    background: #ddd;
-}
-
-.word-list::-webkit-scrollbar-thumb {
-    background-color: gold;
-    border-radius: 10px;
+.word-list {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .word-list div {
     padding: 0.5rem;
     text-align: center;
     color: grey;
+    user-select: none;
 }
 
 footer {
@@ -105,7 +99,6 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
-    border-top: 1px solid #ddd;
 }
 
 footer p, footer a {
