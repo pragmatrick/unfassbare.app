@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             wordElement.textContent = word;
             container.appendChild(wordElement);
         });
+
+        // Duplicate the list to create an infinite scrolling effect
+        words.forEach(word => {
+            const wordElement = document.createElement('div');
+            wordElement.textContent = word;
+            container.appendChild(wordElement);
+        });
     }
 
     function shuffleArray(array) {
@@ -56,18 +63,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         const wordElements = wordList.children;
         const containerRect = wordListContainer.getBoundingClientRect();
         const middle = containerRect.top + containerRect.height / 2;
-        let closest = wordElements[0];
-        let closestDist = Math.abs(middle - closest.getBoundingClientRect().top);
+        
+        // Find the word element that is closest to the middle of the container
+        let closest = null;
+        let closestDist = Infinity;
 
         for (const wordElement of wordElements) {
-            const dist = Math.abs(middle - wordElement.getBoundingClientRect().top);
+            const rect = wordElement.getBoundingClientRect();
+            const dist = Math.abs(middle - rect.top - rect.height / 2);
             if (dist < closestDist) {
                 closest = wordElement;
                 closestDist = dist;
             }
         }
 
-        highlightElement.textContent = closest.textContent;
+        if (closest) {
+            highlightElement.textContent = closest.textContent;
+        }
     }
 
     function getMaxWidth(words) {
@@ -116,10 +128,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const scrollHeight = wordListContainer.scrollHeight;
         const containerHeight = wordListContainer.clientHeight;
 
-        if (scrollTop === 0) {
-            wordListContainer.scrollTop = scrollHeight - containerHeight * 2;
+        if (scrollTop <= 0) {
+            wordListContainer.scrollTop = scrollHeight / 2;
         } else if (scrollTop + containerHeight >= scrollHeight) {
-            wordListContainer.scrollTop = containerHeight;
+            wordListContainer.scrollTop = scrollHeight / 2 - containerHeight;
         }
     }
 
