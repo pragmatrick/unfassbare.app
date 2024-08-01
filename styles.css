@@ -17,10 +17,10 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem 5rem;
     background-color: transparent;
     position: fixed;
-    width: 90%;
+    width: 100%;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -86,7 +86,11 @@ main {
     background: var(--color-bg); /* Light background for the slogan */
     padding: 10px;
     border-radius: 50%;
-    box-shadow: 0 0 10px 10px rgba(var(--color-bg), 0.7); /* Circular fade-out effect */
+    box-shadow: 0 0 10px 10px rgba(214, 214, 214, 0.7); /* Circular fade-out effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
 }
 
 .word-list-container {
