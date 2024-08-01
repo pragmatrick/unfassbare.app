@@ -95,6 +95,16 @@ main {
     width: 100%;
     text-align: center;
 }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.word-list-container::-webkit-scrollbar {
+    display: none;
+}
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+.word-list-container {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
 .word-list {
     display: inline-block;
