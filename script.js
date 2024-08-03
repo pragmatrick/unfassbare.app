@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         highlightElement.style.width = `${maxWidth}px`;
 
         // Adjust the positioning of part1 and part2
-        const slogan = document.getElementById('#slogan');
+        const slogan = document.getElementById('slogan');
         slogan.style.justifyContent = 'center';
         slogan.style.alignItems = 'center';
         slogan.style.gap = '10px';
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         wordListContainer.scrollTop = wordList.clientHeight;
     }
 
-    document.getElementById('#slogan').addEventListener('click', () => {
+    document.getElementById('slogan').addEventListener('click', () => {
         const sloganText = `${document.getElementById('part1').textContent} ${highlightElement.textContent} ${document.getElementById('part2').textContent}`;
         navigator.clipboard.writeText(sloganText);
     });
