@@ -75,7 +75,7 @@ main {
     overflow: hidden; /* Remove scrollbar */
 }
 
- .slogan {
+ #slogan {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -95,7 +95,7 @@ main {
     padding: 0 10px;
 }
 
-.slogan h1:hover {
+#slogan h1:hover {
     cursor: pointer;
 }
 
