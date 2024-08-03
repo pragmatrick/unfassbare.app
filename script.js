@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Calculate the maximum width of the words and set the highlight width accordingly
     const maxWidth = getMaxWidth(shuffledWords);
     setHighlightWidth(maxWidth);
+    slogan.style.visibility = 'visible';
 
     const highlightElement = document.getElementById('highlight');
 
