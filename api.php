@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 // Get environment variables
 $servername = getenv('DB_SERVER');
@@ -16,7 +16,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
-    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error]));
+    die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error], JSON_UNESCAPED_UNICODE));
 }
 
 // Retrieve 'get' parameter from query string
@@ -27,13 +27,13 @@ function getAllWords($conn) {
     $sql = "SELECT word FROM words ORDER BY word ASC";
     $result = $conn->query($sql);
     if ($result === FALSE) {
-        die(json_encode(['error' => 'Query failed: ' . $conn->error]));
+        die(json_encode(['error' => 'Query failed: ' . $conn->error], JSON_UNESCAPED_UNICODE));
     }
     $words = [];
     while($row = $result->fetch_assoc()) {
         $words[] = $row['word'];
     }
-    return json_encode($words);
+    return json_encode($words, JSON_UNESCAPED_UNICODE);
 }
 
 // Function to get a specified number of random words
@@ -41,13 +41,13 @@ function getRandomWords($conn, $count) {
     $sql = "SELECT word FROM words ORDER BY RAND() LIMIT " . intval($count);
     $result = $conn->query($sql);
     if ($result === FALSE) {
-        die(json_encode(['error' => 'Query failed: ' . $conn->error]));
+        die(json_encode(['error' => 'Query failed: ' . $conn->error], JSON_UNESCAPED_UNICODE));
     }
     $words = [];
     while($row = $result->fetch_assoc()) {
         $words[] = $row['word'];
     }
-    return json_encode($words);
+    return json_encode($words, JSON_UNESCAPED_UNICODE);
 }
 
 // Function to get a random word
@@ -55,7 +55,7 @@ function getRandomWord($conn) {
     $sql = "SELECT word FROM words ORDER BY RAND() LIMIT 1";
     $result = $conn->query($sql);
     if ($result === FALSE) {
-        die(json_encode(['error' => 'Query failed: ' . $conn->error]));
+        die(json_encode(['error' => 'Query failed: ' . $conn->error], JSON_UNESCAPED_UNICODE));
     }
     $word = $result->fetch_assoc();
     return $word['word'];
@@ -72,19 +72,17 @@ if (isset($_GET['words'])) {
         $count = intval($getParam);
         echo getRandomWords($conn, $count);
     }
-}
-else if (isset($_GET['word'])) {
+} else if (isset($_GET['word'])) {
     $getParam = $_GET['word'];
-    echo getRandomWord($conn);
-}
-elseif (isset($_GET['hey'])) {
+    echo json_encode(getRandomWord($conn), JSON_UNESCAPED_UNICODE);
+} else if (isset($_GET['hey'])) {
     // Determine the greeting based on the time of day
     $now = new DateTime("now", new DateTimeZone("Europe/Berlin"));
     $hour = $now->format('G');
 
     if ($hour >= 3 && $hour < 12) {
         $timeOfDay = "Morgen";
-    } elseif ($hour >= 12 && $hour < 18) {
+    } else if ($hour >= 12 && $hour < 18) {
         $timeOfDay = "Tag";
     } else {
         $timeOfDay = "Abend";
@@ -97,9 +95,8 @@ elseif (isset($_GET['hey'])) {
     $greeting = "Einen " . $randomWord . " guten " . $timeOfDay . "!";
 
     // Return the greeting as JSON
-    echo json_encode($greeting);
-}
-elseif (isset($_GET['bye'])) {
+    echo json_encode($greeting, JSON_UNESCAPED_UNICODE);
+} else if (isset($_GET['bye'])) {
     // Fetch a random word and append "EN"
     $randomWord = getRandomWord($conn) . "E";
     $firstLetter = mb_strtoupper(mb_substr($randomWord, 0, 1, 'UTF-8'), 'UTF-8');
@@ -110,13 +107,11 @@ elseif (isset($_GET['bye'])) {
     $greeting = $randomWord . " Grüße";
 
     // Return the greeting as JSON
-    echo json_encode($greeting);
-}
-else {
+    echo json_encode($greeting, JSON_UNESCAPED_UNICODE);
+} else {
     // If neither 'get' nor 'einen' is set, return nothing
-    echo json_encode([]);
+    echo json_encode([], JSON_UNESCAPED_UNICODE);
 }
 
 // Close connection
 $conn->close();
-?>
