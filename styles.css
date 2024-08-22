@@ -89,14 +89,11 @@ main {
     z-index: 1;
     user-select: none; /* Prevent text selection */
     gap: 0 !important;
+    pointer-events: none;
 }
 
 #highlight {
     padding: 0 10px;
-}
-
-#slogan h1:hover {
-    cursor: pointer;
 }
 
 .word-list-container {
