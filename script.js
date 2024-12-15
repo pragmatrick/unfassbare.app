@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function setHighlightWidth(shuffledWords) {
         const maxWidth = getMaxWidth(shuffledWords);
-        slogan.style.visibility = 'visible';
+        const slogan = document.getElementById('slogan');
         const part1 = document.getElementById('part1');
         const highlightElement = document.getElementById('highlight');
         const part2 = document.getElementById('part2');
@@ -126,7 +126,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         highlightElement.style.width = `${maxWidth}px`;
 
         // Adjust the positioning of part1 and part2
-        const slogan = document.getElementById('slogan');
         slogan.style.justifyContent = 'center';
         slogan.style.alignItems = 'center';
         slogan.style.gap = '10px';
@@ -134,6 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Center the word list relative to the highlight element
         const offset = (slogan.offsetWidth - highlightElement.offsetWidth) / 2;
         slogan.style.paddingLeft = `${offset/2+10}px`;
+        slogan.style.visibility = 'visible';
     }
 
     function handleInfiniteScroll() {
