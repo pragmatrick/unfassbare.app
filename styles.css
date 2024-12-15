@@ -25,7 +25,7 @@ header {
     left: 0;
     z-index: 1000;
 }
-
+/*
 .menu {
     position: relative;
 }
@@ -57,7 +57,7 @@ header {
     padding: 0.5rem;
     text-decoration: none;
     color: var(--color-black);
-}
+}*/
 
 #github-icon img, #sort-button img {
     width: 24px;

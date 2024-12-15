@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateSlogan();
     });
     
-    document.getElementById('icon-button').addEventListener('click', function () {
+    document.getElementById('sort-button').addEventListener('click', function () {
         if (listSorted) {
             populateWordList(wordList, words);
             document.getElementById('sort-icon').src="images/sort-alphabetical.svg";
