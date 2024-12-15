@@ -61,7 +61,7 @@ function getRandomWord($conn) {
     return $word['word'];
 }
 
-// Handle the request based on the 'get' parameter
+// get?words
 if (isset($_GET['words'])) {
     $getParam = $_GET['words'];
     if ($getParam === '') {
@@ -72,10 +72,14 @@ if (isset($_GET['words'])) {
         $count = intval($getParam);
         echo getRandomWords($conn, $count);
     }
-} else if (isset($_GET['word'])) {
+}
+// get?word 
+else if (isset($_GET['word'])) {
     $getParam = $_GET['word'];
     echo json_encode(getRandomWord($conn), JSON_UNESCAPED_UNICODE);
-} else if (isset($_GET['hey'])) {
+} 
+// get?hey
+else if (isset($_GET['hey'])) {
     // Determine the greeting based on the time of day
     $now = new DateTime("now", new DateTimeZone("Europe/Berlin"));
     $hour = $now->format('G');
@@ -96,7 +100,9 @@ if (isset($_GET['words'])) {
 
     // Return the greeting as JSON
     echo json_encode($greeting, JSON_UNESCAPED_UNICODE);
-} else if (isset($_GET['bye'])) {
+} 
+// get?bye
+else if (isset($_GET['bye'])) {
     // Fetch a random word and append "EN"
     $randomWord = getRandomWord($conn) . "E";
     $firstLetter = mb_strtoupper(mb_substr($randomWord, 0, 1, 'UTF-8'), 'UTF-8');
@@ -108,8 +114,9 @@ if (isset($_GET['words'])) {
 
     // Return the greeting as JSON
     echo json_encode($greeting, JSON_UNESCAPED_UNICODE);
-} else {
-    // If neither 'get' nor 'einen' is set, return nothing
+} 
+// invalid
+else {
     echo json_encode([], JSON_UNESCAPED_UNICODE);
 }
 

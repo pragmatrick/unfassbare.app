@@ -1,4 +1,4 @@
-async function fetchRandomWords(n = "") {
+async function fetchWords(n = "") {
     try {
         if (!Number.isInteger(n)) n = ""
         const response = await fetch(`/api/get?words=${n}`);
@@ -15,25 +15,36 @@ async function fetchRandomWords(n = "") {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let words = await fetchRandomWords();
-
+    const words = await fetchWords();
     const shuffledWords = shuffleArray(words);
-
     const wordListContainer = document.getElementById('wordListContainer');
     const wordList = document.getElementById('wordList');
+    let listSorted = false;
 
+    setHighlightWidth(shuffledWords);
     populateWordList(wordList, shuffledWords);
-
-    // Calculate the maximum width of the words and set the highlight width accordingly
-    const maxWidth = getMaxWidth(shuffledWords);
-    setHighlightWidth(maxWidth);
-    slogan.style.visibility = 'visible';
-
-    const highlightElement = document.getElementById('highlight');
+    setupInfiniteScroll();
+    updateSlogan();
 
     wordListContainer.addEventListener('scroll', () => {
         handleInfiniteScroll();
         updateSlogan();
+    });
+    
+    document.getElementById('icon-button').addEventListener('click', function () {
+        if (listSorted) {
+            populateWordList(wordList, words);
+            document.getElementById('sort-icon').src="images/sort-alphabetical.svg";
+        }
+        else {
+            populateWordList(wordList, shuffledWords);
+            document.getElementById('sort-icon').src="images/sort-random.svg";
+        }
+    });
+
+    document.getElementById('slogan').addEventListener('click', () => {
+        const sloganText = `${document.getElementById('part1').textContent} ${document.getElementById('highlight').textContent} ${document.getElementById('part2').textContent}`;
+        navigator.clipboard.writeText(sloganText);
     });
 
     function populateWordList(container, words) {
@@ -79,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (closest) {
-            highlightElement.textContent = closest.textContent+"EN";
+            document.getElementById('highlight').textContent = closest.textContent+"EN";
         }
     }
 
@@ -103,9 +114,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         return maxWidth;
     }
 
-    function setHighlightWidth(maxWidth) {
-        const highlightElement = document.getElementById('highlight');
+    function setHighlightWidth(shuffledWords) {
+        const maxWidth = getMaxWidth(shuffledWords);
+        slogan.style.visibility = 'visible';
         const part1 = document.getElementById('part1');
+        const highlightElement = document.getElementById('highlight');
         const part2 = document.getElementById('part2');
 
         // Set the width of the highlight element
@@ -140,13 +153,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Adjust the scroll position to the div containing the word list
         wordListContainer.scrollTop = wordList.clientHeight;
     }
-
-    document.getElementById('slogan').addEventListener('click', () => {
-        const sloganText = `${document.getElementById('part1').textContent} ${highlightElement.textContent} ${document.getElementById('part2').textContent}`;
-        navigator.clipboard.writeText(sloganText);
-    });
-
-
-    setupInfiniteScroll();
-    updateSlogan();
 });
