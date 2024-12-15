@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             populateWordList(wordList, shuffledWords);
             document.getElementById('sort-icon').src="images/sort-random.svg";
         }
+        updateSlogan();
     });
 
     document.getElementById('slogan').addEventListener('click', () => {
