@@ -67,7 +67,7 @@ header * {
     justify-content: center; /* Center the content horizontally */
 }
 
-.icon-button {
+#sort-button {
     background: none;
     border: none;
 }
