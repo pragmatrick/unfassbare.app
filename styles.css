@@ -17,6 +17,7 @@ body {
 
 header {
     display: flex;
+    box-sizing: border-box;
     justify-content: space-around;
     padding: 1rem;
     background-color: transparent;
