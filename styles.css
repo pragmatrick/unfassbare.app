@@ -59,6 +59,19 @@ header {
     color: var(--color-black);
 }*/
 
+header * {
+    cursor: pointer;
+    padding: 0; /* Removes extra padding */
+    display: inline-flex; /* Ensures content is inline and flexible */
+    align-items: center; /* Center the content vertically */
+    justify-content: center; /* Center the content horizontally */
+}
+
+.icon-button {
+    background: none;
+    border: none;
+}
+
 #github-icon img, #sort-button img {
     width: 24px;
     height: 24px;

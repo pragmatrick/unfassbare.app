@@ -14,6 +14,14 @@ async function fetchWords(n = "") {
     }
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const words = await fetchWords();
     const shuffledWords = shuffleArray(words);
@@ -32,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     
     document.getElementById('sort-button').addEventListener('click', function () {
+        listSorted = !listSorted;
         if (listSorted) {
             populateWordList(wordList, words);
             document.getElementById('sort-icon').src="images/sort-alphabetical.svg";
@@ -61,14 +70,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             wordElement.textContent = word;
             container.appendChild(wordElement);
         });
-    }
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
     }
 
     function updateSlogan() {
