@@ -1,7 +1,7 @@
 async function fetchWords(n = "") {
     try {
-        if (!Number.isInteger(n)) n = ""
-        const response = await fetch(`/api/get?words=${n}`);
+        const query = Number.isInteger(n) ? `?random=true&limit=${n}` : "";
+        const response = await fetch(`/api/words/${query}`);
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }

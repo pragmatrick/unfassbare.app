@@ -19,12 +19,10 @@ if ($conn->connect_error) {
     die(json_encode(['error' => 'Connection failed: ' . $conn->connect_error], JSON_UNESCAPED_UNICODE));
 }
 
-// Retrieve 'get' parameter from query string
-$getParam = isset($_GET['get']) ? $_GET['get'] : null;
-
 // Function to get all words
-function getAllWords($conn) {
+function getAllWords($conn, $count = null) {
     $sql = "SELECT word FROM words ORDER BY word ASC";
+    if ($count !== null) $sql .= " LIMIT " . intval($count);
     $result = $conn->query($sql);
     if ($result === FALSE) {
         die(json_encode(['error' => 'Query failed: ' . $conn->error], JSON_UNESCAPED_UNICODE));
@@ -37,8 +35,9 @@ function getAllWords($conn) {
 }
 
 // Function to get a specified number of random words
-function getRandomWords($conn, $count) {
-    $sql = "SELECT word FROM words ORDER BY RAND() LIMIT " . intval($count);
+function getRandomWords($conn, $count = null) {
+    $sql = "SELECT word FROM words ORDER BY RAND()";
+    if ($count !== null) $sql .= " LIMIT " . intval($count);
     $result = $conn->query($sql);
     if ($result === FALSE) {
         die(json_encode(['error' => 'Query failed: ' . $conn->error], JSON_UNESCAPED_UNICODE));
@@ -61,25 +60,21 @@ function getRandomWord($conn) {
     return $word['word'];
 }
 
-// get?words
-if (isset($_GET['words'])) {
-    $getParam = $_GET['words'];
-    if ($getParam === '') {
-        // ?get without a value, return all words
-        echo getAllWords($conn);
-    } elseif (ctype_digit($getParam)) {
-        // ?get with a numeric value, return that many random words
-        $count = intval($getParam);
-        echo getRandomWords($conn, $count);
+// /api/words/ always returns an array.
+if (($apiEndpoint ?? '') === 'words') {
+    $random = filter_var($_GET['random'] ?? 'false', FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+    $count = isset($_GET['limit'])
+        ? filter_var($_GET['limit'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]])
+        : null;
+    if ($random === null || $count === false) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid random or limit parameter.']);
+    } else {
+        echo $random ? getRandomWords($conn, $count) : getAllWords($conn, $count);
     }
 }
-// get?word 
-else if (isset($_GET['word'])) {
-    $getParam = $_GET['word'];
-    echo json_encode(getRandomWord($conn), JSON_UNESCAPED_UNICODE);
-} 
-// get?hey
-else if (isset($_GET['hey'])) {
+// /api/greetings/?type=hey
+elseif (($apiEndpoint ?? '') === 'greetings' && $type === 'hey') {
     // Determine the greeting based on the time of day
     $now = new DateTime("now", new DateTimeZone("Europe/Berlin"));
     $hour = $now->format('G');
@@ -101,8 +96,8 @@ else if (isset($_GET['hey'])) {
     // Return the greeting as JSON
     echo json_encode($greeting, JSON_UNESCAPED_UNICODE);
 } 
-// get?bye
-else if (isset($_GET['bye'])) {
+// /api/greetings/?type=bye
+elseif (($apiEndpoint ?? '') === 'greetings' && $type === 'bye') {
     // Fetch a random word and append "EN"
     $randomWord = getRandomWord($conn) . "E";
     $firstLetter = mb_strtoupper(mb_substr($randomWord, 0, 1, 'UTF-8'), 'UTF-8');
